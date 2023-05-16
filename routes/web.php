@@ -1,12 +1,18 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\FacialRecognitionController;
+use App\Http\Controllers\ImageController;
 
-Route::get('/', [FacialRecognitionController::class, 'showUploadForm']);
-Route::post('/upload', [FacialRecognitionController::class, 'uploadImage'])->name('facial-recognition.upload');
-Route::get('/camera', [FacialRecognitionController::class, 'showCameraView']);
+Route::get('/', function () {
+    return view('faceapi');
+});
 
-Route::get('/success', function () {
-    return view('success');
-})->name('success');
+Route::post('/save-face', [
+    ImageController::class,
+    'saveFace'
+])->name('save.face');
+
+Route::get('/success', [
+    ImageController::class,
+    'showSuccessPage'
+]);
